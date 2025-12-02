@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,6 +62,11 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DragAndDropBoxes(modifier: Modifier = Modifier) {
     var isPlaying by remember { mutableStateOf(true) }
+    var dragBoxIndex by remember {
+        mutableIntStateOf(0)
+    }
+
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         Row(
@@ -69,9 +75,6 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 .weight(0.2f)
         ) {
             val boxCount = 4
-            var dragBoxIndex by remember {
-                mutableIntStateOf(0)
-            }
 
             repeat(boxCount) { index ->
                 Box(
@@ -128,11 +131,23 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
             }
         }
 
+        Button(
+            onClick = {
+                dragBoxIndex = 0
+            },
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Text("Reset Position")
+        }
+
 
         val pOffset by animateIntOffsetAsState(
-            targetValue = when (isPlaying) {
-                true -> IntOffset(130, 300)
-                false -> IntOffset(130, 100)
+            targetValue = when (dragBoxIndex) {
+                0 -> IntOffset(55, 100)    // Position for the first box
+                1 -> IntOffset(290, 100)   // Position for the second box
+                2 -> IntOffset(515, 100)   // Position for the third box
+                3 -> IntOffset(745, 100)   // Position for the fourth box
+                else -> IntOffset(100, 100) // Default position
             },
             animationSpec = tween(3000, easing = LinearEasing)
         )
@@ -163,9 +178,16 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                     .background(Color.Blue)
                     .border(2.dp, Color.Black)
                     .align(Alignment.TopStart)
-                    .padding(40.dp)
-
-            )
+                    .padding(40.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "${dragBoxIndex + 1}", // Display the box number (1, 2, 3, or 4)
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }
