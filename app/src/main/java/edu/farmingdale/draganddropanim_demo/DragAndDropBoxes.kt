@@ -142,6 +142,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
 
 
         val pOffset by animateIntOffsetAsState(
+            //Tweaked positions not dynamic to screen size
             targetValue = when (dragBoxIndex) {
                 0 -> IntOffset(55, 100)    // Position for the first box
                 1 -> IntOffset(290, 100)   // Position for the second box
