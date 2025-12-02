@@ -101,6 +101,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                         enter = scaleIn() + fadeIn(),
                         exit = scaleOut() + fadeOut()
                     ) {
+                        //ToDo 4 Correction for Commit
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = "Drag Icon",
